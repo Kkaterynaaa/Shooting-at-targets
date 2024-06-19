@@ -1,6 +1,7 @@
 #include "Shooting.h"
 #include "BiathlonTarget.h"
 #include "RifleTarget.h"
+#include "TargetDrawing.h" 
 
 #include <iostream>
 #include <sstream>
@@ -51,10 +52,10 @@ void Shooting::menu() {
 
 void Shooting::biathlonShooting() {
     vector<BiathlonTarget> biathlonTargets;
-    int a[5]{ 10, 20, 30, 40, 50 };
+    int arr[5]{ -25, -15, -5, 5, 15 };
 
     for (int i = 0; i < numTargetsBiathlon; i++) {
-        biathlonTargets.emplace_back(a[i], 10);
+        biathlonTargets.emplace_back(arr[i], 0);
     }
 
     cout << endl << "Biathlon Shooting: " << endl;
@@ -88,15 +89,18 @@ void Shooting::biathlonShooting() {
             }
         }
 
+        TargetDrawing::draw(arr[i], 0, 4, x, y);
+        
+
         if (points != -1) {
             resBiathlon += points;
             cout << "Points: " << points << endl;
             cout << endl;
-        }
-        else {
+        } else {
             cout << "Cannot shoot anymore." << endl;
         }
     }
+    TargetDrawing::displayScreen();
     displayResults(biathlonResults);
     displayStatistics();
 }
@@ -134,6 +138,8 @@ void Shooting::rifleShooting() {
             cout << "Cannot shoot anymore." << endl;
         }
     }
+    TargetDrawing::draw(0, 0, 10, 0, 0);
+    TargetDrawing::displayScreen();
     displayResults(rifleResults);
     displayStatistics();
 }

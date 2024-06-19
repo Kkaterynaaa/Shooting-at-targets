@@ -18,8 +18,7 @@ int Shooter::shot(AbstractTarget& target, double x, double y) {
         if (dynamic_cast<BiathlonTarget*>(&target)) {
             biathlonShots++;
             if (points > 0) biathlonHits++;
-        }
-        else if (dynamic_cast<RifleTarget*>(&target)) {
+        } else if (dynamic_cast<RifleTarget*>(&target)) {
             rifleShots++;
             if (points > 0) rifleHits++;
         }

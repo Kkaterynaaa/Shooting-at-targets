@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <cmath>
 
+using namespace std;
+
 static double sqr(double x) {
     return x * x;
 }
@@ -17,7 +19,7 @@ bool RifleTarget::canShoot() const {
 
 int RifleTarget::shot(double x, double y) {
     if (!canShoot()) {
-        throw std::invalid_argument("Cannot shoot anymore!");
+        throw invalid_argument("Cannot shoot anymore!");
     }
     maxShots--;
     double distance = sqrt(sqr(x - x1) + sqr(y - y1));

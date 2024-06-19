@@ -15,7 +15,6 @@ bool BiathlonTarget::canShoot() const {
 
 int BiathlonTarget::shot(double x, double y) {
     if (flag) {
-
         int distance = sqr(x - x1) + sqr(y - y1);
         if (distance < radius * radius) {
             flag = false;

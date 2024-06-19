@@ -1,18 +1,15 @@
 #include "RifleTarget.h"
 
-#include <cmath>
 #include <stdexcept>
-
-using namespace std;
-
-const int maxDistanceRifle = 10;
-const int shotsRifle = 10;
+#include <cmath>
 
 static double sqr(double x) {
     return x * x;
 }
 
-RifleTarget::RifleTarget(double x, double y) : x1(x), y1(y), maxShots(shotsRifle) {}
+RifleTarget::RifleTarget(double x, double y):
+    x1(x), y1(y), maxShots(shotsRifle) {
+}
 
 bool RifleTarget::canShoot() const {
     return maxShots > 0;
@@ -20,7 +17,7 @@ bool RifleTarget::canShoot() const {
 
 int RifleTarget::shot(double x, double y) {
     if (!canShoot()) {
-        throw invalid_argument("Cannot shoot anymore!");
+        throw std::invalid_argument("Cannot shoot anymore!");
     }
     maxShots--;
     double distance = sqrt(sqr(x - x1) + sqr(y - y1));

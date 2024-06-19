@@ -7,7 +7,7 @@
 
 class BiathlonTarget: public AbstractTarget {
     public:
-        BiathlonTarget(double x, double y, double radius = 4, int successPoints = 1);
+        BiathlonTarget(double x, double y, double radius = 4.0, int successPoints = 1);
 
         bool canShoot() const override;
         int shot(double x, double y) override;

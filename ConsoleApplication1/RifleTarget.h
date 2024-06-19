@@ -12,13 +12,14 @@ class RifleTarget: public AbstractTarget {
         bool canShoot() const override;
         int shot(double x, double y) override;
         void coordinatesOfTarget(double& x, double& y) const override;
-        int distanceToPoints(double points);
+
+        static int distanceToPoints(double distance);
 
     private:
         double x1, y1;
         int maxShots;
-       
+        const int shotsRifle = 5;
+        static const int maxDistanceRifle = 10;
 };
 
 #endif
-

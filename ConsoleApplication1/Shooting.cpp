@@ -1,4 +1,6 @@
 #include "Shooting.h"
+#include "BiathlonTarget.h"
+#include "RifleTarget.h"
 
 #include <iostream>
 #include <sstream>
@@ -6,21 +8,58 @@
 
 using namespace std;
 
-const int distanceTargetsBiathlon = 10;
-const int numTargetsBiathlon = 5;
-const int shotsBiathlon = 5;
-const int shotsRifle = 10;
+Shooting::Shooting() : shooter(nullptr) {}
 
-void Shooting::biathlon() {
-    Shooter shooter;
+void Shooting::start() {
+    setupShooter();
+    menu();
+}
+
+void Shooting::setupShooter() {
+    string shooterName;
+    cout << "Enter shooter's name: ";
+    cin >> shooterName;
+    cout << endl;
+    shooter = new Shooter(shooterName);
+    cout << "Welcome, " << shooter -> getName() << "!" << endl;
+}
+
+void Shooting::menu() {
+    cout << "Choose shooting event:" << endl;
+    cout << endl;
+    cout << "1. Biathlon" << endl;
+    cout << "2. Rifle" << endl;
+
+    cout << endl << "Enter your choice (1 or 2): ";
+
+    int choice;
+    cin >> choice;
+    cin.ignore();
+
+    switch (choice) {
+    case 1:
+        biathlonShooting();
+        break;
+    case 2:
+        rifleShooting();
+        break;
+    default:
+        cout << "Invalid choice." << endl;
+        break;
+    }
+}
+
+void Shooting::biathlonShooting() {
     vector<BiathlonTarget> biathlonTargets;
+    int a[5]{ 10, 20, 30, 40, 50 };
 
     for (int i = 0; i < numTargetsBiathlon; i++) {
-        biathlonTargets.emplace_back(distanceTargetsBiathlon * (i + 1), 0);
+        biathlonTargets.emplace_back(a[i], 10);
     }
 
-    cout << "Biathlon Shooting: " << endl;
+    cout << endl << "Biathlon Shooting: " << endl;
     int resBiathlon = 0;
+    vector<int> biathlonResults;
 
     for (int i = 0; i < shotsBiathlon; i++) {
         double x, y;
@@ -42,8 +81,9 @@ void Shooting::biathlon() {
         int points = -1;
 
         for (auto& target : biathlonTargets) {
-            points = shooter.shot(target, x, y);
+            points = shooter -> shot(target, x, y);
             if (points > 0) {
+                biathlonResults.push_back(points);
                 break;
             }
         }
@@ -51,19 +91,22 @@ void Shooting::biathlon() {
         if (points != -1) {
             resBiathlon += points;
             cout << "Points: " << points << endl;
-        } else {
+            cout << endl;
+        }
+        else {
             cout << "Cannot shoot anymore." << endl;
         }
     }
-    cout << endl << "Result biathlon shooting: " << resBiathlon << endl;
+    displayResults(biathlonResults);
+    displayStatistics();
 }
 
-void Shooting::rifle() {
-    Shooter shooter;
+void Shooting::rifleShooting() {
     RifleTarget rifleTarget(0, 0);
 
-    cout << "Rifle Shooting: " << endl;
+    cout << endl << "Rifle Shooting: " << endl;
     int resRifle = 0;
+    vector<int> rifleResults;
 
     for (int i = 0; i < shotsRifle; i++) {
         double x, y;
@@ -81,15 +124,16 @@ void Shooting::rifle() {
                 cout << "Please enter valid coordinates." << endl;
             }
         }
-
-        int points = shooter.shot(rifleTarget, x, y);
+        int points = shooter->shot(rifleTarget, x, y);
 
         if (points != -1) {
             resRifle += points;
             cout << "Points: " << points << endl;
+            rifleResults.push_back(points);
         } else {
             cout << "Cannot shoot anymore." << endl;
         }
     }
-    cout << endl << "Result rifle shooting: " << resRifle << endl;
+    displayResults(rifleResults);
+    displayStatistics();
 }

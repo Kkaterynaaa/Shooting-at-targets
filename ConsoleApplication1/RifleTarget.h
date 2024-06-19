@@ -18,7 +18,7 @@ class RifleTarget: public AbstractTarget {
     private:
         double x1, y1;
         int maxShots;
-        const int shotsRifle = 5;
+        static const int shotsRifle = 5;
         static const int maxDistanceRifle = 10;
 };
 
